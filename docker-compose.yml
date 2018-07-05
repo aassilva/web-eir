@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  mysql:
+    image: mariadb:latest
+    environment:
+      MYSQL_DATABASE: "eir"
+      MYSQL_ROOT_PASSWORD: "123"
+    volumes:
+      - "./mysql/data/:/var/lib/mysql"
+    ports:
+      - 3306:3306
+

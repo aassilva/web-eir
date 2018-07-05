@@ -1,0 +1,40 @@
+{% extends 'layouts/default.njk' %}
+
+{% block body %}
+  <div class="wrapper">
+    {% include 'partials/nav.njk' %}
+    {% include 'partials/remedies.njk' %}
+
+    <section class="remedy-content">
+      {% if user.type == 0 %}
+        <div class="actions">
+          <a href="#" class="edit" data-modal-open="#edit-remedy">Editar</a>
+
+          <form method="POST" action="/app/units/{{ activeUnit }}/remedies/{{ currentRemedy.id }}?_method=DELETE">
+            <button type="submit">Remover</button>
+          </form>
+        </div>
+      {% endif %}
+
+      <h1>{{ currentRemedy.name }}</h1>
+      <p>Apresentação: {{ currentRemedy.type }}</p>
+      <p>Conteúdo: {{ currentRemedy.content }}</p>
+      <p>Laboratório: {{ currentRemedy.lab }}</p>
+      <p>Código: {{ currentRemedy.code }}</p>
+      {# <div class="content">{{ currentRemedy.formattedContent | safe }}</div> #}
+    </section>
+
+    <div class="modal" id="edit-remedy">
+      <form class="modal-content" method="POST" action="/app/units/{{ activeUnit }}/remedies/{{ currentRemedy.id }}?_method=PUT">
+        <input type="text" name="name" placeholder="Nome do medicamento" value="{{ currentRemedy.name }}">
+        <input type="text" name="type" placeholder="Apresentação do medicamento (comprimido, gotas, etc)" value="{{ currentRemedy.type }}">
+        <input type="number" name="content" placeholder="Conteúdo do medicamento (10, 500, etc)" value="{{ currentRemedy.content }}">
+        <input type="text" name="lab" placeholder="Laboratório do medicamento" value="{{ currentRemedy.lab }}">
+        <input type="text" name="code" placeholder="Código do medicamento" value="{{ currentRemedy.code }}">
+
+        <button type="submit">SALVAR MEDICAMENTO</button>
+        <a href="#" data-modal-close="#edit-remedy">CANCELAR</a>
+      </form>
+    </div>
+  </div>
+{% endblock %}

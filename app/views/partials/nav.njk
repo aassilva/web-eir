@@ -1,0 +1,47 @@
+<nav id="main">
+  <div class="header">
+    <strong>{{ user.name }}</strong>
+    <a href="/signout">Sair</a>
+  </div>
+
+  <div class="units">
+    <strong>UNIDADES</strong>
+
+    <ul>
+      {% if units.length > 0 %}
+        {% for unit in units %}
+          <li class="{% if unit.id == activeUnit %}active{% endif %}">
+            <a href="/app/units/{{ unit.id }}">
+              {{ unit.name }}
+              </br>
+              <p>{{ unit.phone }}</p>
+            </a>
+          </li>
+        {% endfor %}
+      {% endif %}
+
+      {% if units.length == 0 %}
+        <li class="{% if unit.id == activeUnit %}active{% endif %}">
+          <a href="#">
+            Nenhuma Unidade
+          </a>
+        </li>
+      {% endif %}
+
+    </ul>
+
+    {% if user.type == 0 %}
+      <a href="#" data-modal-open="#new-unit">NOVA UNIDADE</a>
+    {% endif %}
+  </div>
+</nav>
+
+<div class="modal" id="new-unit">
+  <form class="modal-content" method="POST" action="/app/units/create">
+    <input type="text" name="name" placeholder="Nome da unidade">
+    <input type="text" name="phone" placeholder="Telefone da unidade">
+
+    <button type="submit">SALVAR UNIDADE</button>
+    <a href="#" data-modal-close="#new-unit">CANCELAR</a>
+  </form>
+</div>
